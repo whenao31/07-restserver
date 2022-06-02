@@ -33,11 +33,11 @@ const UserSchema = Schema({
     },
 });
 
-// Overrriding method 'toJSON' in order to take off fields of the Model
+// Overrriding method 'toJSON' in order to take some fields off of the Model
 UserSchema.methods.toJSON = function() {
-    // de-structuring the model letting out '__v' and 'password'
-    const { __v, password, ...user } = this.toObject();
-    return user;
+    // de-structuring the model letting out '__v', '_id' and 'password'
+    const { __v, password, _id, ...user } = this.toObject();
+    return { uid: _id, ...user };
 }
 
 module.exports = model('Users', UserSchema);
